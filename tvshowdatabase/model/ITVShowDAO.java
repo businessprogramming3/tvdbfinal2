@@ -14,6 +14,8 @@ public interface ITVShowDAO {
     
     TVShow retrieveRecordById(int id);
     
+    TVShow retrieveRecordByName(String name);
+    
     List<TVShow> retrieveAllRecords();
     
     void updateRecord(TVShow updatedShow);

@@ -21,13 +21,13 @@ public class TVShowDAO implements ITVShowDAO {
     protected final static boolean DEBUG = true;
 	
 	public void createRecord(TVShow show){
-		final String QUERY = "Insert Into Show: "
-				+ ("(id, rating, seasons, name, genre, director, mainActor)" 
-				+ "VALUES (null, ?, ?, ?, ?, ?, ?)");
+		final String QUERY = "insert into tvshow "
+				+ "(id, rating, seasons, name, genre, director, actor)" 
+				+ "VALUES (null, ?, ?, ?, ?, ?, ?)";
 		
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement stmt = con.prepareStatement(QUERY);){
-			stmt.setDouble(1, show.getRating());
+                        stmt.setDouble(1, show.getRating());
 			stmt.setInt(2, show.getSeasons());
 			stmt.setString(3, show.getName());
                         stmt.setString(4, show.getGenre());
@@ -44,8 +44,8 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 	
 	public TVShow retrieveRecordById(int id) {
-		final String QUERY = "select id, rating, seasons, name, director, writer, mainActor, " 
-				+ "from show where id = " + id;
+		final String QUERY = "select id, rating, seasons, name, genre, director, actor " 
+				+ "from tvshow where id = " + id;
 		
 		TVShow show = null;
 		
@@ -64,7 +64,7 @@ public class TVShowDAO implements ITVShowDAO {
 						rs.getString("name"),
                                                 rs.getString("genre"),
 						rs.getString("director"),
-						rs.getString("mainActor"));
+						rs.getString("actor"));
 			}
 		}catch (SQLException ex) {
 			System.out.println("retrieveRecordById SQLException: " + ex.getMessage());
@@ -75,7 +75,7 @@ public class TVShowDAO implements ITVShowDAO {
 	
 	public List<TVShow> retrieveAllRecords(){
 		final List<TVShow> myList = new ArrayList<>();
-		final String QUERY = "select id, rating, seasons, name, genre, director, mainActor from show";
+		final String QUERY = "select id, rating, seasons, name, genre, director, actor from tvshow";
 		
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement stmt = con.prepareStatement(QUERY)){
@@ -92,7 +92,7 @@ public class TVShowDAO implements ITVShowDAO {
 						rs.getString("name"),
                                                 rs.getString("genre"),
 						rs.getString("director"),
-						rs.getString("mainActor")));
+						rs.getString("actor")));
 				
 			}
 		} catch (SQLException ex){
@@ -102,8 +102,8 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 	
 	public TVShow retrieveRecordByName(String name){
-		final String QUERY = "select id, rating, seasons, name, genre, director, mainActor, " 
-				+ "from show where name = " + name;
+		final String QUERY = "select id, rating, seasons, name, genre, director, actor " 
+				+ "from tvshow where name = " + name;
 		
 		TVShow show = null;
 		
@@ -123,7 +123,7 @@ public class TVShowDAO implements ITVShowDAO {
 						rs.getString("name"),
                                                 rs.getString("genre"),
 						rs.getString("director"),
-						rs.getString("mainActor"));						
+						rs.getString("actor"));						
 			}
 		} catch (SQLException ex){
 			System.out.println("retrieveRecordByName SQLException: " + ex.getMessage());
@@ -133,7 +133,8 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 
 	public void updateRecord(TVShow updatedShow){
-		final String QUERY = "update show set rating=?, seasons=?, name=?, genre=?, director=?, mainActor=? where id=?";
+		final String QUERY = "update tvshow set rating=?, seasons=?, name=?, genre=?, director=?, "
+                        + "actor=? where id=?";
 		
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement stmt = con.prepareStatement(QUERY)){
@@ -143,6 +144,7 @@ public class TVShowDAO implements ITVShowDAO {
                                 stmt.setString(4, updatedShow.getGenre());
 				stmt.setString(5, updatedShow.getDirector());
 				stmt.setString(6, updatedShow.getMainActor());
+                                stmt.setInt(7, updatedShow.getId());
 				if(DEBUG){
 					System.out.println(stmt.toString());
 				}
@@ -153,7 +155,7 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 	
 	public void deleteRecord(int id){
-		final String QUERY = "delete from show where id=?";
+		final String QUERY = "delete from tvshow where id=?";
 		
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement stmt = con.prepareStatement(QUERY)){

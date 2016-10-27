@@ -26,9 +26,10 @@ private void menu(){
         System.out.println("1 = LIST ALL RECORDS");
         System.out.println("2 = CREATE NEW RECORD");
         System.out.println("3 = RETRIEVE RECORD BY ID");
-        System.out.println("4 = UPDATE RECORD");
-        System.out.println("5 = DELETE RECORD");
-        choice = Validator.getLine(scan, "NUMBER OF CHOICE: ", "[0-5]$");
+        System.out.println("4 = RETRIEVE RECORD BY NAME");
+        System.out.println("5 = UPDATE RECORD");
+        System.out.println("6 = DELETE RECORD");
+        choice = Validator.getLine(scan, "NUMBER OF CHOICE: ", "[0-6]$");
             
         switch(choice){
             case "1":
@@ -43,14 +44,18 @@ private void menu(){
                 director = Validator.getLine(scan, "NEW DIRECTOR: ");
                 mainActor = Validator.getLine(scan, "NEW MAIN ACTOR: ");
                     
-                showList.updateRecord(new TVShow(id, rating, seasons, name, genre, director, mainActor));
+                showList.createRecord(new TVShow(id, rating, seasons, name, genre, director, mainActor));
                 break;
             case "3":
                 id = Validator.getInt(scan, "TV SHOW ID TO RETRIEVE: ");
                 System.out.println(showList.retrieveRecordById(id));
                 break;
-            case "4": 
-                id = Validator.getInt(scan, "UPDATED TV SHOW ID: ");
+            case "4":
+                name = Validator.getLine(scan, "TV SHOW NAME TO RETRIEVE: ");
+                System.out.println(showList.retrieveRecordByName(name));
+                break;
+            case "5": 
+                id = Validator.getInt(scan, "TVSHOW ID TO UPDATE: ");
                 rating = Validator.getDouble(scan, "UPDATED RATING: ");
                 seasons = Validator.getInt(scan, "UPDATED NUMBER OF SEASONS: ");
                 name = Validator.getLine(scan, "UPDATED NAME: ");
@@ -59,7 +64,7 @@ private void menu(){
                 mainActor = Validator.getLine(scan, "UPDATED MAIN ACTOR: ");
                 showList.updateRecord(new TVShow(id, rating, seasons, name, genre, director, mainActor));
                 break;
-            case "5":
+            case "6":
                 id = Validator.getInt(scan, "ENTER ID OF TV SHOW TO DELETE: ");
                 System.out.println(showList.retrieveRecordById(id));
                 String ok = Validator.getLine(scan, "DELETE? (y/n): ", "^[yYnN]$");
