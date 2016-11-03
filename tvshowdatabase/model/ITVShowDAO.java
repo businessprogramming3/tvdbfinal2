@@ -16,6 +16,14 @@ public interface ITVShowDAO {
     
     TVShow retrieveRecordByName(String name);
     
+    List <TVShow> retrieveRecordsByRating(double rating);
+    
+    List <TVShow> retrieveRecordsByActor(String actor);
+    
+    List <TVShow> retrieveRecordsByDirector(String director);
+    
+    List <TVShow> retrieveRecordsByGenre(String genre);
+    
     List<TVShow> retrieveAllRecords();
     
     void updateRecord(TVShow updatedShow);

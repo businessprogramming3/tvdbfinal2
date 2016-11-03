@@ -102,20 +102,19 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 	
 	public TVShow retrieveRecordByName(String name){
-		final String QUERY = "select id, rating, seasons, name, genre, director, actor " 
-				+ "from tvshow where name = " + name;
+		final String QUERY = "select id, rating, seasons, name, genre, "
+                        + "director, actor from tvshow where name = " + "\"" + name + "\"";
 		
 		TVShow show = null;
 		
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement stmt = con.prepareStatement(QUERY)){
-			stmt.setString(1, name);
 			if(DEBUG){
 				System.out.println(stmt.toString());
 			}
 			ResultSet rs = stmt.executeQuery(QUERY);
 			
-			if (rs.next()){
+			while (rs.next()){
 				show = new TVShow(
 						rs.getInt("id"),
 						rs.getDouble("rating"),
@@ -131,7 +130,23 @@ public class TVShowDAO implements ITVShowDAO {
 		
 		return show;
 	}
+        
+        public List<TVShow> retrieveRecordsByRating(double rating){
+            //Alyssa
+        }
 
+        public List <TVShow> retrieveRecordsByDirector(String director){
+            //Jacques
+        }
+        
+        public List <TVShow> retrieveRecordsByActor(String actor){
+            //Jessica
+        }
+        
+        public List <TVShow> retrieveRecordsByGenre(String genre){
+            //Zachary
+        }
+        
 	public void updateRecord(TVShow updatedShow){
 		final String QUERY = "update tvshow set rating=?, seasons=?, name=?, genre=?, director=?, "
                         + "actor=? where id=?";
