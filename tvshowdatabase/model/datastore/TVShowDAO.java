@@ -102,7 +102,7 @@ public class TVShowDAO implements ITVShowDAO {
 	}
 	
 	public TVShow retrieveRecordByName(String name){
-		final String QUERY = "select id, rating, seasons, name, genre, "
+            final String QUERY = "select id, rating, seasons, name, genre, "
                         + "director, actor from tvshow where name = " + "\"" + name + "\"";
 		
 		TVShow show = null;
@@ -133,18 +133,73 @@ public class TVShowDAO implements ITVShowDAO {
         
         public List<TVShow> retrieveRecordsByRating(double rating){
             //Alyssa
+            final List<TVShow> myList = new ArrayList<>();
+            return myList;
         }
 
         public List <TVShow> retrieveRecordsByDirector(String director){
             //Jacques
+                final List<TVShow> myList = new ArrayList<>();
+            final String QUERY = "select id, rating, seasons, name, genre, "
+                    + "director, actor from tvshow where director = " + "\"" + director + "\"";
+            
+            try(Connection con = DBConnection.getConnection();
+                    PreparedStatement stmt = con.prepareStatement(QUERY)){
+                if(DEBUG){
+                    System.out.println(stmt.toString());
+                }
+                ResultSet rs = stmt.executeQuery(QUERY);
+                
+                while(rs.next()){
+                    myList.add(new TVShow(
+                        rs.getInt("id"),
+                        rs.getDouble("rating"),
+                        rs.getInt("seasons"),
+                        rs.getString("name"),
+                        rs.getString("genre"),
+                        rs.getString("director"),
+                        rs.getString("actor")));
+                }
+            }catch(SQLException ex){
+                System.out.println("retrieveRecordsByDirector SQLException: " + ex.getMessage());
+            }
+            return myList;
+          
         }
         
         public List <TVShow> retrieveRecordsByActor(String actor){
             //Jessica
+            final List<TVShow> myList = new ArrayList<>();
+            final String QUERY = "select id, rating, seasons, name, genre, "
+                    + "director, actor from tvshow where actor = " + "\"" + actor + "\"";
+            
+            try(Connection con = DBConnection.getConnection();
+                    PreparedStatement stmt = con.prepareStatement(QUERY)){
+                if(DEBUG){
+                    System.out.println(stmt.toString());
+                }
+                ResultSet rs = stmt.executeQuery(QUERY);
+                
+                while(rs.next()){
+                    myList.add(new TVShow(
+                        rs.getInt("id"),
+                        rs.getDouble("rating"),
+                        rs.getInt("seasons"),
+                        rs.getString("name"),
+                        rs.getString("genre"),
+                        rs.getString("director"),
+                        rs.getString("actor")));
+                }
+            }catch(SQLException ex){
+                System.out.println("retrieveRecordsByActor SQLException: " + ex.getMessage());
+            }
+            return myList;
         }
         
         public List <TVShow> retrieveRecordsByGenre(String genre){
             //Zachary
+            final List<TVShow> myList = new ArrayList<>();
+            return myList;
         }
         
 	public void updateRecord(TVShow updatedShow){
