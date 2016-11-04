@@ -199,6 +199,29 @@ public class TVShowDAO implements ITVShowDAO {
         public List <TVShow> retrieveRecordsByGenre(String genre){
             //Zachary
             final List<TVShow> myList = new ArrayList<>();
+            final String QUERY = "select id, rating, seasons, name, genre, "
+                    + "director, actor from tvshow where genre = " + "\"" + genre + "\"";
+            
+            try(Connection con = DBConnection.getConnection();
+                    PreparedStatement stmt = con.prepareStatement(QUERY)){
+                if(DEBUG){
+                    System.out.println(stmt.toString());
+                }
+                ResultSet rs = stmt.executeQuery(QUERY);
+                
+                while(rs.next()){
+                    myList.add(new TVShow(
+                        rs.getInt("id"),
+                        rs.getDouble("rating"),
+                        rs.getInt("seasons"),
+                        rs.getString("name"),
+                        rs.getString("genre"),
+                        rs.getString("director"),
+                        rs.getString("actor")));
+                }
+            }catch(SQLException ex){
+                System.out.println("retrieveRecordsByGenre SQLException: " + ex.getMessage());
+            }
             return myList;
         }
         
