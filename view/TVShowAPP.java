@@ -33,7 +33,7 @@ private void menu(){
         System.out.println("8 = RETRIEVE RECORD BY ACTOR");
         System.out.println("9 = UPDATE RECORD");
         System.out.println("10 = DELETE RECORD");
-        choice = Validator.getLine(scan, "NUMBER OF CHOICE: ", "[0-9]$");
+        choice = Validator.getLine(scan, "NUMBER OF CHOICE: ", "\\d+$");
             
         switch(choice){
             case "1": //list all records
