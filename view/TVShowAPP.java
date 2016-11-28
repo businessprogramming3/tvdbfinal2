@@ -33,6 +33,7 @@ private void menu(){
         System.out.println("8 = RETRIEVE RECORD BY ACTOR");
         System.out.println("9 = UPDATE RECORD");
         System.out.println("10 = DELETE RECORD");
+        System.out.println("11 = SORT BY RATING");
         choice = Validator.getLine(scan, "NUMBER OF CHOICE: ", "\\d+$");
             
         switch(choice){
@@ -90,6 +91,11 @@ private void menu(){
                 String ok = Validator.getLine(scan, "DELETE? (y/n): ", "^[yYnN]$");
                 if(ok.equalsIgnoreCase("y")){
                     showList.deleteRecord(id);
+                }
+                break;
+            case "11"://sort by rating
+                for(TVShow show : showList.sortByRating()){
+                    System.out.println(show);
                 }
                 break;
         }

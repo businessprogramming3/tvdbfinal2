@@ -81,4 +81,6 @@ public interface ITVShowDAO {
      * @param show
      */
     void deleteRecord(TVShow show);
+    
+    List<TVShow> sortByRating();
 }
